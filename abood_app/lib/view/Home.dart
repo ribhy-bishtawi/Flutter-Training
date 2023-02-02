@@ -77,22 +77,22 @@ class _HomePageState extends State<HomePage> {
     return Expanded(
       child: ListView.separated(
           itemBuilder: (context, index) {
-            UserModel userModel = usersControllerModel.userListModel[index];
+            List<NBest> userModel = usersControllerModel.nBestList;
             return Container(
               child: Column(children: [
                 Text(
-                  userModel.email,
+                  userModel.,
                   style: TextStyle(color: Colors.white),
                 ),
                 Text(
-                  userModel.name,
+                  userModel.,
                   style: TextStyle(color: Colors.white),
                 ),
               ]),
             );
           },
           separatorBuilder: (context, index) => Divider(),
-          itemCount: usersControllerModel.userListModel.length),
+          itemCount: usersControllerModel.nBestList.length),
     );
   }
 }

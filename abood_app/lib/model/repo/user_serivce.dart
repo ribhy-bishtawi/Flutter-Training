@@ -12,7 +12,7 @@ class UserService {
       var url = Uri.parse(USER_LIST);
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        return Success(response: usersListModelFromJson(response.body));
+        return Success(response: responseModelFromJson(response.body));
       }
       return Failure(
           code: USER_INVALID_RESPONSE, errorResponse: "Invalid Response");

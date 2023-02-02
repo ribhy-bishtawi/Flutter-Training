@@ -7,29 +7,43 @@ import 'package:abood_app/model/response.dart';
 
 class UsersController extends ChangeNotifier {
   late bool _loading = false;
-  List<UserModel> _userListModel = [];
+  ResponseModel _userListModel = ResponseModel(
+      id: "",
+      recognitionStatus: 0,
+      offset: 0,
+      duration: 0,
+      displayText: "displayText",
+      nBest: []);
+  List<NBest> _nBest = [];
 
   UsersController() {
     getUsers();
   }
 
   bool get loading => _loading;
-  List<UserModel> get userListModel => _userListModel;
+  ResponseModel get userListModel => _userListModel;
+  List<NBest> get nBestList => _nBest;
 
   setLoading(bool loading) async {
     _loading = loading;
     notifyListeners();
   }
 
-  setUserListModel(List<UserModel> userListModel) {
+  setUserListModel(ResponseModel userListModel) {
     _userListModel = userListModel;
+  }
+
+  setNBestList(List<NBest> nBestUser) {
+    _nBest = nBestUser;
   }
 
   getUsers() async {
     setLoading(true);
     var response = await UserService.getResponse();
     if (response is Success) {
-      setUserListModel(response.response as List<UserModel>);
+      ResponseModel responseModel = response.response as ResponseModel;
+      setUserListModel(responseModel);
+      setNBestList(responseModel.nBest);
     }
     // TODO
     // if(response is Failure)
