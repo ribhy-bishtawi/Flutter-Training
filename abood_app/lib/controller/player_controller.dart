@@ -36,6 +36,8 @@ class PlayerController extends ChangeNotifier {
   }
 
   Future _play(VoidCallback whenFinished) async {
+    final filePath = await PathConstants.videoPath;
+
     await _audioPlayer!.startPlayer(
       fromURI: filePath,
       whenFinished: whenFinished,

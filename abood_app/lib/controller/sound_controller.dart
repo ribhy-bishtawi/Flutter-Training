@@ -1,6 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:typed_data';
+
+import 'package:abood_app/model/repo/user_serivce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:abood_app/model/audio_recorder.dart';
 
@@ -35,6 +40,7 @@ class SoundController extends ChangeNotifier {
 
   Future _record() async {
     if (!_isRecorderInitilized) return;
+    final filePath = await PathConstants.videoPath;
     await _audioRecorder!.startRecorder(
       toFile: filePath,
     );
@@ -54,6 +60,7 @@ class SoundController extends ChangeNotifier {
     } else {
       _isRecording = false;
       await _stop();
+      UserService.postRecord();
       notifyListeners();
     }
   }
