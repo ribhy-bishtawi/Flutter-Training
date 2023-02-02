@@ -77,16 +77,16 @@ class _HomePageState extends State<HomePage> {
     return Expanded(
       child: ListView.separated(
           itemBuilder: (context, index) {
-            List<NBest> userModel = usersControllerModel.nBestList;
+            NBest userModel = usersControllerModel.nBestList[index];
             return Container(
               child: Column(children: [
                 Text(
-                  userModel.,
-                  style: TextStyle(color: Colors.white),
+                  userModel.display,
+                  style: const TextStyle(color: Colors.white),
                 ),
                 Text(
-                  userModel.,
-                  style: TextStyle(color: Colors.white),
+                  userModel.words[index].offset.toString(),
+                  style: const TextStyle(color: Colors.white),
                 ),
               ]),
             );
