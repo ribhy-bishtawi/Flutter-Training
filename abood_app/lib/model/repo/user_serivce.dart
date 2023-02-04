@@ -27,25 +27,6 @@ class UserService {
     }
   }
 
-  // static Future<void> postRecord() async {
-  //   ByteData byteData = await rootBundle.load(filePath);
-  //   List<int> data = byteData.buffer.asUint8List();
-
-  //   var url = Uri.parse(VIDEO_API);
-
-  //   final response = await http.post(
-  //     url,
-  //     headers: {'Content-Type': 'application/octet-stream'},
-  //     body: data,
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     print('Record successfully posted.');
-  //   } else {
-  //     throw Exception('Failed to post record.');
-  //   }
-  // }
-
   static void postRecord() async {
     // 1. Get the path to the recorded audio file
 

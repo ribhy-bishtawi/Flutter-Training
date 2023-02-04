@@ -16,9 +16,9 @@ class UsersController extends ChangeNotifier {
       nBest: []);
   List<NBest> _nBest = [];
 
-  UsersController() {
-    getUsers();
-  }
+  // UsersController() {
+  //   getUsers();
+  // }
 
   bool get loading => _loading;
   ResponseModel get userListModel => _userListModel;

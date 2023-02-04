@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:typed_data';
 
+import 'package:abood_app/controller/user_contoller.dart';
 import 'package:abood_app/model/repo/user_serivce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +16,16 @@ class SoundController extends ChangeNotifier {
   bool _isRecording = false;
   bool get isRecording => _isRecording;
   bool _isRecorderInitilized = false;
+  bool _isPressed = false;
+  bool get isPressed => _isPressed;
+
   FlutterSoundRecorder? _audioRecorder;
+  FlutterSoundRecorder? get audioRecorder => _audioRecorder;
+
+  void setIsPressed() {
+    _isPressed = !_isPressed;
+    notifyListeners();
+  }
 
   SoundController() {
     init();
@@ -56,11 +66,12 @@ class SoundController extends ChangeNotifier {
     if (_audioRecorder!.isStopped) {
       _isRecording = true;
       await _record();
+
       notifyListeners();
     } else {
-      _isRecording = false;
       await _stop();
-      UserService.postRecord();
+      _isRecording = false;
+      // UserService.postRecord();
       notifyListeners();
     }
   }

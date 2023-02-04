@@ -1,6 +1,5 @@
 import 'package:abood_app/controller/player_controller.dart';
-import 'package:abood_app/model/audio_recorder.dart';
-import 'package:abood_app/model/response.dart';
+import 'package:abood_app/utils/constants.dart';
 import 'package:abood_app/view/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +20,18 @@ class AppMain extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SoundController()),
         ChangeNotifierProvider(create: (_) => PlayerController()),
       ],
-      child: const MaterialApp(
-          debugShowCheckedModeBanner: false, title: "Test", home: HomePage()),
+      child: MaterialApp(
+        theme: ThemeData(
+          // primarySwatch: Colors.blue,
+          appBarTheme: const AppBarTheme(
+            elevation: 0,
+            color: MAIN_COLOR, //<-- SEE HERE
+          ),
+        ),
+        debugShowCheckedModeBanner: false,
+        title: "Test",
+        home: HomePage(),
+      ),
     );
   }
 }
