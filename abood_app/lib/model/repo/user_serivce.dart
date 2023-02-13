@@ -1,8 +1,7 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:abood_app/model/repo/api_status.dart';
-import 'package:flutter/services.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 import '../../utils/constants.dart';
@@ -29,6 +28,7 @@ class UserService {
 
   static void postRecord() async {
     // 1. Get the path to the recorded audio file
+    final dio = Dio();
 
     // 2. Read the contents of the file
     final filePath = await PathConstants.videoPath;
@@ -36,14 +36,18 @@ class UserService {
     final bytes = await File(filePath).readAsBytes();
 
     // 3. Create a multipart form data request
-    final request = http.MultipartRequest('POST', Uri.parse(VIDEO_API));
+    final formData = FormData.fromMap({
+      'reftext': 'السلام عليكم',
+      'language': 'en-US',
+      'audio_data':
+          MultipartFile.fromFile(filePath, filename: 'audio_example.wav')
+    });
+    final response = await dio.post(VIDEO_API, data: formData);
+    print(response.data);
 
     // 4. Add the file to the request
-    request.files.add(http.MultipartFile.fromBytes('file', bytes,
-        filename: 'audio_example.wav'));
 
     // 5. Send the request
-    final response = await request.send();
 
     // Handle the response from the server
   }

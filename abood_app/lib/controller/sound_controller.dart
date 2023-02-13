@@ -71,7 +71,7 @@ class SoundController extends ChangeNotifier {
     } else {
       await _stop();
       _isRecording = false;
-      // UserService.postRecord();
+      UserService.postRecord();
       notifyListeners();
     }
   }

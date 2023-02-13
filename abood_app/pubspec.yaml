@@ -42,6 +42,7 @@ dependencies:
   gradient_borders: ^0.2.0
   font_awesome_flutter: ^10.3.0
   percent_indicator: ^4.2.2
+  dio: ^5.0.0
 
 dev_dependencies:
   flutter_test:
