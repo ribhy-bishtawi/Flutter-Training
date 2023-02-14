@@ -72,7 +72,6 @@ class _HomePageState extends State<HomePage> {
         ),
         onPressed: () async {
           final isRecording = await soundControllerModel.toggleRecording();
-          usersControllerModel.getUsers();
         },
         child: Container(
           width: 200.0,
@@ -114,9 +113,6 @@ class _HomePageState extends State<HomePage> {
 
   _ui(UsersController usersControllerModel,
       SoundController soundControllerModel) {
-    // if (usersControllerModel.loading) {
-    //   return Container();
-    // }
     return Container(
       child: soundControllerModel.isRecording
           ? const Center(
@@ -141,29 +137,25 @@ class _HomePageState extends State<HomePage> {
                         width: MediaQuery.of(context).size.width / 2,
                         child: Column(children: [
                           ScoreListTile(
-                            header: 'Header 1',
+                            header: 'dfafas',
                             score: 0.8,
                           ),
                           ScoreListTile(
-                            header: 'Header 1',
+                            header:
+                                '${userModel.pronunciationAssessment.completenessScore}',
                             score: 0.8,
                           ),
                           ScoreListTile(
-                            header: 'Header 1',
+                            header:
+                                '${userModel.pronunciationAssessment.fluencyScore}',
                             score: 0.8,
                           ),
                           ScoreListTile(
-                            header: 'Header 1',
+                            header:
+                                '${userModel.pronunciationAssessment.pronScore}',
                             score: 0.8,
                           ),
-                          ScoreListTile(
-                            header: 'Header 1',
-                            score: 0.8,
-                          ),
-                          ScoreListTile(
-                            header: 'Header 1',
-                            score: 0.2,
-                          ),
+
                           //  Text(
                           //     userModel.display,
                           //     style: const TextStyle(color: Colors.white),

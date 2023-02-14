@@ -26,24 +26,22 @@ class UserService {
     }
   }
 
-  static void postRecord() async {
+  static Future<Object> postRecord() async {
     // 1. Get the path to the recorded audio file
-    final dio = Dio();
 
     // 2. Read the contents of the file
     final filePath = await PathConstants.videoPath;
 
-    final bytes = await File(filePath).readAsBytes();
+    File videoFile = File(filePath);
+    var request = http.Request('POST', Uri.parse(VIDEO_API));
+
+    request.body =
+        'audio_data=${videoFile.readAsBytesSync()}&reftext=hello&language=en-US'; // Encode the video file as a form value
+    var response = await request.send().timeout(Duration(seconds: 5));
+
+    return response.stream.bytesToString();
 
     // 3. Create a multipart form data request
-    final formData = FormData.fromMap({
-      'reftext': 'السلام عليكم',
-      'language': 'en-US',
-      'audio_data':
-          MultipartFile.fromFile(filePath, filename: 'audio_example.wav')
-    });
-    final response = await dio.post(VIDEO_API, data: formData);
-    print(response.data);
 
     // 4. Add the file to the request
 

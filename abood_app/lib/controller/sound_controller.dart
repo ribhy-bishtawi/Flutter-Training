@@ -18,7 +18,7 @@ class SoundController extends ChangeNotifier {
   bool _isRecorderInitilized = false;
   bool _isPressed = false;
   bool get isPressed => _isPressed;
-
+  UsersController usersController = UsersController();
   FlutterSoundRecorder? _audioRecorder;
   FlutterSoundRecorder? get audioRecorder => _audioRecorder;
 
@@ -69,9 +69,9 @@ class SoundController extends ChangeNotifier {
 
       notifyListeners();
     } else {
+      usersController.getUsers();
       await _stop();
       _isRecording = false;
-      UserService.postRecord();
       notifyListeners();
     }
   }
