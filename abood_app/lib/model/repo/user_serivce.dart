@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:abood_app/model/repo/api_status.dart';
 import 'package:dio/dio.dart';
@@ -34,12 +35,15 @@ class UserService {
     final filePath = await PathConstants.videoPath;
 
     File videoFile = File(filePath);
-    var video = await videoFile.readAsBytes();
+    final Uint8List videoBytes = await videoFile.readAsBytes();
+
     var request = http.MultipartRequest('POST', Uri.parse(VIDEO_API))
-      ..fields['audio_data'] = '$video'
+      ..fields['audio_data'] = base64.encode(await videoFile.readAsBytes())
       ..fields['reftext'] = 'hello'
-      ..fields['language'] = 'en-US'
-      ..headers['Content-Type'] = 'application/octet-stream';
+      ..fields['language'] = 'en-US';
+    // ..files.add(http.MultipartFile('audio_data',
+    //     videoFile.readAsBytes().asStream(), videoFile.lengthSync(),
+    //     filename: filePath));
 
     // var body =
     //     'audio_data=${videoFile.readAsBytesSync()}&reftext=hello&language=en-US'; // Encode the video file as a form value

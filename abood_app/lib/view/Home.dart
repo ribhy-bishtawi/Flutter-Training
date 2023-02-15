@@ -1,6 +1,7 @@
 import 'package:abood_app/controller/player_controller.dart';
 import 'package:abood_app/controller/sound_controller.dart';
 import 'package:abood_app/controller/user_contoller.dart';
+import 'package:abood_app/model/repo/user_serivce.dart';
 import 'package:abood_app/model/response.dart';
 import 'package:abood_app/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,12 @@ class _HomePageState extends State<HomePage> {
               _headerSection(usersControllerModel),
 
               _recordingSection(soundControllerModel, usersControllerModel),
+              ElevatedButton(
+                onPressed: () async {
+                  UserService.postRecord();
+                },
+                child: Text("Hi"),
+              ),
               const SizedBox(
                 height: 20,
               ),
@@ -74,7 +81,7 @@ class _HomePageState extends State<HomePage> {
         ),
         onPressed: () async {
           final isRecording = await soundControllerModel.toggleRecording();
-          usersControllerModel.getUsers();
+          // usersControllerModel.getUsers();
         },
         child: Container(
           width: 200.0,
