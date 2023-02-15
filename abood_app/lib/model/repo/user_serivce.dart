@@ -33,13 +33,21 @@ class UserService {
     final filePath = await PathConstants.videoPath;
 
     File videoFile = File(filePath);
-    var request = http.Request('POST', Uri.parse(VIDEO_API));
 
-    request.body =
+    var body =
         'audio_data=${videoFile.readAsBytesSync()}&reftext=hello&language=en-US'; // Encode the video file as a form value
-    var response = await request.send().timeout(Duration(seconds: 5));
+    // var response = await request.send();
+    var client = http.Client();
+    var headers = {
+      'Connection': 'Keep-Alive',
+    };
 
-    return response.stream.bytesToString();
+    var response = await client
+        .post(Uri.parse(VIDEO_API), body: body, headers: headers)
+        .timeout(const Duration(seconds: 100));
+
+    return Success(response: responseModelFromJson(response.body));
+    ;
 
     // 3. Create a multipart form data request
 

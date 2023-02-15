@@ -39,9 +39,9 @@ class UsersController extends ChangeNotifier {
 
   getUsers() async {
     setLoading(true);
-    var response = UserService.postRecord();
+    var response = await UserService.postRecord();
     if (response is Success) {
-      ResponseModel responseModel = response.asStream() as ResponseModel;
+      ResponseModel responseModel = response.response as ResponseModel;
       setUserListModel(responseModel);
       setNBestList(responseModel.nBest);
     }
