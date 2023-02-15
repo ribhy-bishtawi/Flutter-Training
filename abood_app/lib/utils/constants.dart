@@ -22,6 +22,6 @@ const LINEAR_GRADIENT_COLOR_2 = Color.fromARGB(255, 240, 146, 29);
 class PathConstants {
   static Future<String> get videoPath async {
     final directory = await getApplicationDocumentsDirectory();
-    return '${directory.path}/video.mp4';
+    return '${directory.path}/video.wav';
   }
 }

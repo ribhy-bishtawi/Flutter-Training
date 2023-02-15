@@ -12,13 +12,13 @@ import 'package:abood_app/model/response.dart';
 class UsersController extends ChangeNotifier {
   late bool _loading = false;
   late bool _randomWord = false;
+
   ResponseModel _userListModel = ResponseModel(
-      id: "",
-      recognitionStatus: 0,
-      offset: 0,
-      duration: 0,
-      displayText: "displayText",
-      nBest: []);
+    offset: 0.0,
+    duration: 0.0,
+    nBest: [],
+    recognitionStatus: '',
+  );
   List<NBest> _nBest = [];
   late String _randomWordString = '';
   final List<String> arabicWords = [

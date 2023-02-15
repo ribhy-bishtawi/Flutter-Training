@@ -1,15 +1,12 @@
 import 'package:abood_app/controller/player_controller.dart';
 import 'package:abood_app/controller/sound_controller.dart';
 import 'package:abood_app/controller/user_contoller.dart';
-import 'package:abood_app/model/repo/user_serivce.dart';
 import 'package:abood_app/model/response.dart';
 import 'package:abood_app/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -48,12 +45,6 @@ class _HomePageState extends State<HomePage> {
               _headerSection(usersControllerModel),
 
               _recordingSection(soundControllerModel, usersControllerModel),
-              ElevatedButton(
-                onPressed: () async {
-                  UserService.postRecord();
-                },
-                child: Text("Hi"),
-              ),
               const SizedBox(
                 height: 20,
               ),
@@ -80,7 +71,8 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(10),
         ),
         onPressed: () async {
-          final isRecording = await soundControllerModel.toggleRecording();
+          final isRecording =
+              await soundControllerModel.toggleRecording(usersControllerModel);
           // usersControllerModel.getUsers();
         },
         child: Container(
@@ -148,19 +140,19 @@ class _HomePageState extends State<HomePage> {
                         child: Column(children: [
                           ScoreListTile(
                             header: 'درجة الدقة',
-                            score: 1,
+                            score: userModel.accuracyScore / 100,
                           ),
                           ScoreListTile(
                             header: 'درجة الاكتمال',
-                            score: 0.5,
+                            score: userModel.completenessScore / 100,
                           ),
                           ScoreListTile(
                             header: 'درجة الطلاقة',
-                            score: 0.8,
+                            score: userModel.fluencyScore / 100,
                           ),
                           ScoreListTile(
                             header: 'درجة النطق',
-                            score: 0.8,
+                            score: userModel.pronScore / 100,
                           ),
 
                           //  Text(

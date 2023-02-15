@@ -1,9 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:abood_app/model/repo/api_status.dart';
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 import '../../utils/constants.dart';
@@ -29,53 +26,25 @@ class UserService {
   }
 
   static Future<Object> postRecord() async {
-    // 1. Get the path to the recorded audio file
-
-    // 2. Read the contents of the file
     final filePath = await PathConstants.videoPath;
 
     File videoFile = File(filePath);
-    final Uint8List videoBytes = await videoFile.readAsBytes();
 
     var request = http.MultipartRequest('POST', Uri.parse(VIDEO_API))
-      ..fields['audio_data'] = base64.encode(await videoFile.readAsBytes())
       ..fields['reftext'] = 'hello'
-      ..fields['language'] = 'en-US';
-    // ..files.add(http.MultipartFile('audio_data',
-    //     videoFile.readAsBytes().asStream(), videoFile.lengthSync(),
-    //     filename: filePath));
+      ..fields['language'] = 'en-US'
+      ..files.add(http.MultipartFile('audio_data',
+          videoFile.readAsBytes().asStream(), videoFile.lengthSync(),
+          filename: filePath));
 
-    // var body =
-    //     'audio_data=${videoFile.readAsBytesSync()}&reftext=hello&language=en-US'; // Encode the video file as a form value
-    // var response = await http
-    //     .post(Uri.parse(VIDEO_API),
-    //         headers: <String, String>{
-    //           'Content-Type': 'application/json; charset=UTF-8',
-    //           'Connection': 'Keep-Alive'
-    //         },
-    //         body: body)
-    //     .timeout(Duration(seconds: 20));
     var response = await http.Response.fromStream(
         await request.send().timeout(Duration(seconds: 100)));
     if (response.statusCode == 200) {
-      var jsonString = response.body;
-      var jsonData = json.decode(jsonString);
-      print(jsonData);
+      return Success(response: responseModelFromJson(response.body));
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }
 
-    // var response = await request.send();
-
-    return response;
-    ;
-
-    // 3. Create a multipart form data request
-
-    // 4. Add the file to the request
-
-    // 5. Send the request
-
-    // Handle the response from the server
+    return response.body;
   }
 }
