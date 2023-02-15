@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:abood_app/model/repo/api_status.dart';
@@ -33,20 +34,36 @@ class UserService {
     final filePath = await PathConstants.videoPath;
 
     File videoFile = File(filePath);
+    var video = await videoFile.readAsBytes();
+    var request = http.MultipartRequest('POST', Uri.parse(VIDEO_API))
+      ..fields['audio_data'] = '$video'
+      ..fields['reftext'] = 'hello'
+      ..fields['language'] = 'en-US'
+      ..headers['Content-Type'] = 'application/octet-stream';
 
-    var body =
-        'audio_data=${videoFile.readAsBytesSync()}&reftext=hello&language=en-US'; // Encode the video file as a form value
+    // var body =
+    //     'audio_data=${videoFile.readAsBytesSync()}&reftext=hello&language=en-US'; // Encode the video file as a form value
+    // var response = await http
+    //     .post(Uri.parse(VIDEO_API),
+    //         headers: <String, String>{
+    //           'Content-Type': 'application/json; charset=UTF-8',
+    //           'Connection': 'Keep-Alive'
+    //         },
+    //         body: body)
+    //     .timeout(Duration(seconds: 20));
+    var response = await http.Response.fromStream(
+        await request.send().timeout(Duration(seconds: 100)));
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      var jsonData = json.decode(jsonString);
+      print(jsonData);
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+
     // var response = await request.send();
-    var client = http.Client();
-    var headers = {
-      'Connection': 'Keep-Alive',
-    };
 
-    var response = await client
-        .post(Uri.parse(VIDEO_API), body: body, headers: headers)
-        .timeout(const Duration(seconds: 100));
-
-    return Success(response: responseModelFromJson(response.body));
+    return response;
     ;
 
     // 3. Create a multipart form data request

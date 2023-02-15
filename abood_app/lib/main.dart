@@ -20,17 +20,20 @@ class AppMain extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SoundController()),
         ChangeNotifierProvider(create: (_) => PlayerController()),
       ],
-      child: MaterialApp(
-        theme: ThemeData(
-          // primarySwatch: Colors.blue,
-          appBarTheme: const AppBarTheme(
-            elevation: 0,
-            color: MAIN_COLOR, //<-- SEE HERE
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: MaterialApp(
+          theme: ThemeData(
+            // primarySwatch: Colors.blue,
+            appBarTheme: const AppBarTheme(
+              elevation: 0,
+              color: MAIN_COLOR, //<-- SEE HERE
+            ),
           ),
+          debugShowCheckedModeBanner: false,
+          title: "Test",
+          home: HomePage(),
         ),
-        debugShowCheckedModeBanner: false,
-        title: "Test",
-        home: HomePage(),
       ),
     );
   }

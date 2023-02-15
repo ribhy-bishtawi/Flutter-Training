@@ -44,6 +44,8 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              _headerSection(usersControllerModel),
+
               _recordingSection(soundControllerModel, usersControllerModel),
               const SizedBox(
                 height: 20,
@@ -72,6 +74,7 @@ class _HomePageState extends State<HomePage> {
         ),
         onPressed: () async {
           final isRecording = await soundControllerModel.toggleRecording();
+          usersControllerModel.getUsers();
         },
         child: Container(
           width: 200.0,
@@ -134,25 +137,22 @@ class _HomePageState extends State<HomePage> {
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        width: MediaQuery.of(context).size.width / 2,
+                        width: MediaQuery.of(context).size.width,
                         child: Column(children: [
                           ScoreListTile(
-                            header: 'dfafas',
+                            header: 'Accuracy Score',
+                            score: 1,
+                          ),
+                          ScoreListTile(
+                            header: 'Completeness Score',
+                            score: 0.5,
+                          ),
+                          ScoreListTile(
+                            header: 'Fluency Score',
                             score: 0.8,
                           ),
                           ScoreListTile(
-                            header:
-                                '${userModel.pronunciationAssessment.completenessScore}',
-                            score: 0.8,
-                          ),
-                          ScoreListTile(
-                            header:
-                                '${userModel.pronunciationAssessment.fluencyScore}',
-                            score: 0.8,
-                          ),
-                          ScoreListTile(
-                            header:
-                                '${userModel.pronunciationAssessment.pronScore}',
+                            header: 'Pron Score',
                             score: 0.8,
                           ),
 
@@ -194,6 +194,25 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  _headerSection(UsersController usersControllerModel) {
+    String _randomWord = usersControllerModel.randomWordString;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("$_randomWord"),
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () async {
+              await usersControllerModel.setRandomWordString();
+            },
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class ScoreListTile extends StatelessWidget {
@@ -220,9 +239,9 @@ class ScoreListTile extends StatelessWidget {
               Expanded(
                 child: LinearPercentIndicator(
                   lineHeight: 14.0,
-                  percent: 0.5,
-                  center: const Text(
-                    "50.0%",
+                  percent: score,
+                  center: Text(
+                    "$score%",
                     style: TextStyle(fontSize: 12.0),
                   ),
                   // trailing: Icon(Icons.mood),

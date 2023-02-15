@@ -5,7 +5,8 @@ import 'package:path_provider/path_provider.dart';
 
 const String USER_LIST =
     'https://mocki.io/v1/e3e069dd-1f0c-4f8e-ba50-9a8c93944c90';
-const String VIDEO_API = 'https://isef.bishtawi.me/check_pronunciation';
+const String VIDEO_API =
+    'https://webhook.site/880665c0-0462-4d57-b163-11a2981e5d8c';
 // https://webhook.site/880665c0-0462-4d57-b163-11a2981e5d8c
 // https://isef.bishtawi.me
 

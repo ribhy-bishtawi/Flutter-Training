@@ -69,7 +69,7 @@ class SoundController extends ChangeNotifier {
 
       notifyListeners();
     } else {
-      usersController.getUsers();
+      // usersController.getUsers();
       await _stop();
       _isRecording = false;
       notifyListeners();
