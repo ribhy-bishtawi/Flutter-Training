@@ -44,6 +44,7 @@ dependencies:
   percent_indicator: ^4.2.2
   dio: ^5.0.0
   english_words: ^4.0.0
+  arabic_words: ^0.1.22
 
 dev_dependencies:
   flutter_test:

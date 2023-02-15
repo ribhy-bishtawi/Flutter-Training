@@ -140,19 +140,19 @@ class _HomePageState extends State<HomePage> {
                         width: MediaQuery.of(context).size.width,
                         child: Column(children: [
                           ScoreListTile(
-                            header: 'Accuracy Score',
+                            header: 'درجة الدقة',
                             score: 1,
                           ),
                           ScoreListTile(
-                            header: 'Completeness Score',
+                            header: 'درجة الاكتمال',
                             score: 0.5,
                           ),
                           ScoreListTile(
-                            header: 'Fluency Score',
+                            header: 'درجة الطلاقة',
                             score: 0.8,
                           ),
                           ScoreListTile(
-                            header: 'Pron Score',
+                            header: 'درجة النطق',
                             score: 0.8,
                           ),
 

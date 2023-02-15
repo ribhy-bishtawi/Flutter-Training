@@ -1,5 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:math';
+
 import 'package:english_words/english_words.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:abood_app/model/repo/api_status.dart';
@@ -18,6 +21,18 @@ class UsersController extends ChangeNotifier {
       nBest: []);
   List<NBest> _nBest = [];
   late String _randomWordString = '';
+  final List<String> arabicWords = [
+    'كتاب',
+    'مدرسة',
+    'طالب',
+    'جامعة',
+    'شمس',
+    'قمر',
+    'نجمة',
+    'سماء',
+    'بحر',
+    'جبل',
+  ];
 
   // UsersController() {
   //   getUsers();
@@ -50,7 +65,10 @@ class UsersController extends ChangeNotifier {
 
   setRandomWordString() {
     setRandomWord(true);
-    _randomWordString = WordPair.random().asUpperCase;
+    final Random random = Random();
+    int index = random.nextInt(arabicWords.length);
+
+    _randomWordString = arabicWords[index];
     setRandomWord(false);
   }
 
